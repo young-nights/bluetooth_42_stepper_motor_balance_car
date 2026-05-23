@@ -1,4 +1,4 @@
-# 🦞 Bluetooth 42 Stepper Motor Balance Car
+# Bluetooth 42 Stepper Motor Balance Car
 
 > 基于 STM32F103 + RT-Thread 的双轮自平衡小车 | Two-wheel Self-balancing Robot
 
