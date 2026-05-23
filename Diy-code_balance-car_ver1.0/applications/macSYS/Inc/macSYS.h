@@ -37,6 +37,7 @@
 #include "rtt_printf_show.h"
 
 /* macSYS中的头文件 */
+#include "macConfig.h"
 #include "macTypedef.h"
 #include "macFlash.h"
 

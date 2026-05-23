@@ -104,7 +104,7 @@ void DRV1_Work_Mode_Set(motorEnable status,motorDir direction,rt_uint32_t Period
 void DRV2_Work_Mode_Set(motorEnable status,motorDir direction,rt_uint32_t Period, rt_uint32_t Dutyfactor);
 int motorCheckTimer_Init(void);
 
-
-
+/* Car pick-up detection: returns 1 if tipped over (>45 deg) */
+uint8_t If_Car_Was_Picked_Up(void);
 
 #endif /* APPLICATIONS_MACAPP_INC_RTT_MOTOR_CTRL_H_ */

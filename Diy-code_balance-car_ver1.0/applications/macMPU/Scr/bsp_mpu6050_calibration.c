@@ -131,6 +131,7 @@ rt_err_t mpu6xxx_calibrate_accel_6side(struct mpu6xxx_device *dev, mpu6xxx_calib
         return mpu6xxx_set_accel_offset(dev, &accel_offset);
     }
 
+    return RT_EOK;
 }
 
 

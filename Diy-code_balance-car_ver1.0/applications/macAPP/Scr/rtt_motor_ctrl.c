@@ -459,7 +459,7 @@ CAR_TYPE Right_Speed_Calculate(mac_car_t *car)
   * @param  void
   * @retval 1 if car is picked up/tipped, 0 otherwise
   */
-static inline uint8_t If_Car_Was_Picked_Up(void)
+uint8_t If_Car_Was_Picked_Up(void)
 {
     extern EulerAngles carEulerAngles;
     /* Check if pitch or roll angle exceeds threshold (car tipped over or picked up) */
