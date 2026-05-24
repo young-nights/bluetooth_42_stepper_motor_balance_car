@@ -104,29 +104,21 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         final int id = item.getItemId();
         item.setChecked(true);
-
-        // Close drawer with minimal delay, then navigate
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        if (id == R.id.nav_home) {
-            return true;
+        Intent intent = null;
+        if (id == R.id.nav_calibration) {
+            intent = new Intent(MainActivity.this, CalibrationActivity.class);
+        } else if (id == R.id.nav_connection) {
+            intent = new Intent(MainActivity.this, SettingsActivity.class);
+        } else if (id == R.id.nav_control) {
+            intent = new Intent(MainActivity.this, ControlActivity.class);
         }
 
-        // Slight delay lets drawer start closing before new activity slides in
-        drawerLayout.postDelayed(() -> {
-            Intent intent = null;
-            if (id == R.id.nav_calibration) {
-                intent = new Intent(MainActivity.this, CalibrationActivity.class);
-            } else if (id == R.id.nav_connection) {
-                intent = new Intent(MainActivity.this, SettingsActivity.class);
-            } else if (id == R.id.nav_control) {
-                intent = new Intent(MainActivity.this, ControlActivity.class);
-            }
-            if (intent != null) {
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        }, 120);
+        if (intent != null) {
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
 
         return true;
     }

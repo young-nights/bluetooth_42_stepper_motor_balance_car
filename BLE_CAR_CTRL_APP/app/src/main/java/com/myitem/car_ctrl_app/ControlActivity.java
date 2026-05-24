@@ -58,11 +58,16 @@ public class ControlActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("小车控制");
 
         bluetoothService = BluetoothService.getInstance(this);
-
         initViews();
-        setupDirectionButtons();
-        setupToggleButtons();
-        setupSpeedControls();
+
+        // Defer listener setup until after first frame to avoid layout-inflation stutter.
+        // The control layout is large (~30 views + gradient background) and inflating it
+        // on the main thread drops frames if we also set up listeners synchronously.
+        getWindow().getDecorView().post(() -> {
+            setupDirectionButtons();
+            setupToggleButtons();
+            setupSpeedControls();
+        });
     }
 
     private void initViews() {
