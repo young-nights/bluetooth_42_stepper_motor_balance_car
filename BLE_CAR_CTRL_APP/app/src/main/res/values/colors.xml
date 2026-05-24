@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#FFFF0000</color>
+    <color name="azure">#FF007FFF</color>
+
+    <!-- 导航菜单文本和图标颜色 -->
+    <color name="nav_text_color">#000000</color>
+    <color name="nav_icon_color">#1E88E5</color>
+
+
+</resources>

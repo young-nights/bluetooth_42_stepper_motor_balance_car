@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">CAR_CTRL_APP</string>
+    <string name="Accelerate_name">Accelerate</string>
+    <string name="Decelerate_name">Decelerate</string>
+    <string name="Normal_name">Normal</string>
+    <string name="Setting_name">设置</string>
+    <string name="RealSpeed_name">实速：</string>
+    <string name="NormalSpeed_name">常速：</string>
+    <string name="Distant_name">距离：</string>
+    <string name="Pitch_name">俯仰角：</string>
+    <string name="Yaw_name">偏航角：</string>
+    <string name="Roll_name">翻滚角：</string>
+    <string name="advanced_setup">高级设置</string>
+    <string name="control_panel">控制面板</string>
+    <string name="home_Page">主页</string>
+    <string name="navigation_drawer_open">打开导航菜单</string>
+    <string name="navigation_drawer_close">关闭导航菜单</string>
+    <string name="Balancing_car_console">平衡小车控制台</string>
+    <string name="calibration_title">姿态校准</string>
+    <string name="settings_title">高级设置</string>
+    <string name="euler_angle">欧拉角</string>
+    <string name="go_straight">直行</string>
+    <string name="retreat">后退</string>
+    <string name="upright">直立</string>
+
+    <string name="Accelerate_CH">加速</string>
+    <string name="Decelerate_CH">减速</string>
+    <string name="DefaultSpeed_CH">默认速度</string>
+
+    <string name="todo">TODO</string>
+    <string name="Attitude_calibration">姿态校准</string>
+    <string name="PITCH">PITCH</string>
+    <string name="AttitudeAngleMonitoring">姿态角监测</string>
+    <string name="ROLL">ROLL</string>
+    <string name="description_minus">Minus button</string>
+    <string name="description_plus">Plus button</string>
+    <string name="btn_close">关闭</string>
+    <string name="execute">执行</string>
+    <string name="btn_changed">Toggle switch state</string>
+    <string name="_50">50</string>
+
+    <!-- Additional strings for Bluetooth settings -->
+    <string name="scan_devices">Scan Devices</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="connected">● Connected</string>
+    <string name="disconnected_status">○ Disconnected</string>
+    <string name="connecting">Connecting…</string>
+    <string name="no_devices_found">No devices found. Press "Scan Devices" to search.</string>
+    <string name="available_devices">Available Devices</string>
+    <string name="bluetooth_permission_required">Bluetooth permissions are required</string>
+
+    <!-- Calibration strings -->
+    <string name="gyro_calibration">Gyro Calibration</string>
+    <string name="six_side_calibration">Six-Side Calib</string>
+    <string name="mech_calibration">Mech Midpoint</string>
+    <string name="calibration_commands">Calibration Commands</string>
+    <string name="calibration_info">Euler angles are polled automatically every 1 second while connected.</string>
+
+    <!-- Car control strings -->
+    <string name="bluetooth_not_connected">Bluetooth not connected. Please connect in Settings first.</string>
+    <string name="car_ready">Car is ready!</string>
+</resources>

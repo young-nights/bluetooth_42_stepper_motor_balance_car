@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout_control"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ControlActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/nav_control"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gradient">
+
+        <!--***************************************************************-->
+        <!-- 加速栏的加速按钮 -->
+        <ImageButton
+            android:id="@+id/btnPlus_accelerate"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/btn_silver_selector"
+            android:contentDescription="@string/description_plus"
+            android:elevation="2dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_plus"
+            android:stateListAnimator="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_default_plus_value"
+            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            tools:ignore="ColorContrast,ImageContrastCheck" />
+
+        <!-- 加速栏的减速按钮 -->
+        <ImageButton
+            android:id="@+id/btnMinus_accelerate"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_silver_selector"
+            android:contentDescription="@string/description_minus"
+            android:elevation="2dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_minus"
+            android:stateListAnimator="@null"
+            app:layout_constraintEnd_toStartOf="@+id/tv_default_plus_value"
+            app:layout_constraintStart_toEndOf="@+id/btnPlus_decelerate"
+            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            tools:ignore="ImageContrastCheck" />
+
+        <!-- 加速栏的加速值 -->
+        <TextView
+            android:id="@+id/tv_default_plus_value"
+            android:layout_width="54dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:drawable/editbox_background"
+            android:gravity="center"
+            android:text="@string/_50"
+            app:layout_constraintEnd_toStartOf="@+id/btnPlus_accelerate"
+            app:layout_constraintStart_toEndOf="@+id/btnMinus_accelerate"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <!-- 加速栏的加速文本 -->
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="136dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="40dp"
+            android:text="@string/Accelerate_CH"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            app:layout_constraintBottom_toBottomOf="@+id/textView8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/toggleButton3_upRight" />
+
+
+        <!--***************************************************************-->
+        <!-- 减速栏的加速按钮 -->
+        <ImageButton
+            android:id="@+id/btnPlus_decelerate"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_silver_selector"
+            android:contentDescription="@string/description_plus"
+            android:elevation="2dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_plus"
+            android:stateListAnimator="@null"
+            app:layout_constraintStart_toEndOf="@+id/tv_default_minus_value"
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            tools:ignore="ColorContrast,ImageContrastCheck" />
+        <!-- 减速栏的减速按钮 -->
+        <ImageButton
+            android:id="@+id/btnMinus_decelerate"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_silver_selector"
+            android:contentDescription="@string/description_minus"
+            android:elevation="2dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_minus"
+            android:stateListAnimator="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            tools:ignore="ImageContrastCheck,MissingConstraints" />
+        <!-- 减速栏的减速值  -->
+        <TextView
+            android:id="@+id/tv_default_minus_value"
+            android:layout_width="54dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="2dp"
+            android:background="@android:drawable/editbox_background"
+            android:gravity="center"
+            android:text="@string/_50"
+            app:layout_constraintEnd_toStartOf="@+id/btnPlus_decelerate"
+            app:layout_constraintStart_toEndOf="@+id/btnMinus_decelerate"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        <!-- 减速栏的减速文本  -->
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="135dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/Decelerate_CH"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toggleButton_goStraight" />
+
+        <!--****************************************************************-->
+        <!-- 后退文本 -->
+        <TextView
+            android:id="@+id/textView_back"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="1dp"
+            android:text="@string/retreat"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_goStraight"
+            app:layout_constraintEnd_toStartOf="@+id/textView_upRight"
+            app:layout_constraintStart_toEndOf="@+id/textView_goStraight"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_control"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <!-- 后退执行与关闭按钮 -->
+        <ToggleButton
+            android:id="@+id/toggleButton2_back"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:contentDescription="@string/btn_changed"
+            android:textOff="@string/btn_close"
+            android:textOn="@string/execute"
+            app:layout_constraintEnd_toStartOf="@+id/toggleButton3_upRight"
+            app:layout_constraintStart_toEndOf="@+id/toggleButton_goStraight"
+            app:layout_constraintTop_toBottomOf="@+id/textView_back" />
+
+        <!-- 直立文本 -->
+        <TextView
+            android:id="@+id/textView_upRight"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="1dp"
+            android:text="@string/upright"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView_back"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_control" />
+
+        <!-- 直立执行与关闭按钮 -->
+        <ToggleButton
+            android:id="@+id/toggleButton3_upRight"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:contentDescription="@string/btn_changed"
+            android:textOff="@string/btn_close"
+            android:textOn="@string/execute"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/toggleButton2_back"
+            app:layout_constraintTop_toBottomOf="@+id/textView_upRight" />
+
+        <!-- 直行文本 -->
+        <TextView
+            android:id="@+id/textView_goStraight"
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="1dp"
+            android:text="@string/go_straight"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            app:layout_constraintEnd_toStartOf="@+id/textView_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_control" />
+
+        <!-- 直行执行与关闭按钮 -->
+        <ToggleButton
+            android:id="@+id/toggleButton_goStraight"
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:contentDescription="@string/btn_changed"
+            android:textOff="@string/btn_close"
+            android:textOn="@string/execute"
+            app:layout_constraintEnd_toStartOf="@+id/toggleButton2_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_goStraight"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+
+        <!--****************************************************************-->
+        <!-- 顶部工具栏 -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_control"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/material_dynamic_primary50"
+            android:elevation="4dp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="小车控制面板"
+            app:titleTextColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/forward_button"
+            android:layout_width="70dp"
+            android:layout_height="49dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:icon="@drawable/direction_up"
+            app:layout_constraintBottom_toTopOf="@+id/car_imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <Button
+            android:id="@+id/left_button"
+            android:layout_width="70dp"
+            android:layout_height="49dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:icon="@drawable/direction_left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/car_imageView"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.736"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <Button
+            android:id="@+id/down_button"
+            android:layout_width="70dp"
+            android:layout_height="49dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:icon="@drawable/direction_down"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/car_imageView"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <Button
+            android:id="@+id/right_button"
+            android:layout_width="70dp"
+            android:layout_height="49dp"
+            android:layout_marginEnd="68dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:icon="@drawable/direction_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/car_imageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.736"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/car_imageView"
+            android:layout_width="83dp"
+            android:layout_height="71dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.745"
+            app:srcCompat="@drawable/car"
+            tools:ignore="ContentDescription" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
