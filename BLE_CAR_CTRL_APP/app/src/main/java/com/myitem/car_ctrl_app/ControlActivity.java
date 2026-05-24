@@ -245,6 +245,14 @@ public class ControlActivity extends AppCompatActivity
     // ===================== Lifecycle =====================
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        // Reset drawer selection to home when returning from sub-pages
+        NavigationView navView = findViewById(R.id.nav_view_control);
+        if (navView != null) navView.setCheckedItem(R.id.nav_home);
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         if (bluetoothService.isConnected()) {
