@@ -2,17 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-
     <!-- 蓝牙权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
-
     <!-- Android 12+ 新权限体系 -->
-    <!-- 用于应用发起与BLE设备的连接 -->
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
-    <!-- 允许应用扫描附近的BLE设备 -->
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
                      android:usesPermissionFlags="neverForLocation"
                      tools:targetApi="s" />
@@ -21,18 +16,12 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
-
-    <!-- 这个权限允许应用通过蓝牙低功耗广播数据,通常用于那些希望作为BLE外设的应用，向其他BLE设备广播信息-->
-    <!-- <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE"/> -->
-
-    <!-- 配置蓝牙功能 -->
     <uses-feature android:name="android.hardware.bluetooth"
                   android:required="true"/>
 
     <uses-feature android:name="android.hardware.bluetooth_le"
                   android:required="true"/>
-    
-    
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -44,46 +33,43 @@
         android:theme="@style/Theme.CAR_CTRL_APP"
         tools:targetApi="31">
 
-
-
+        <!-- ControlActivity is the home page (launcher) -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ControlActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/settings_title"
-            android:parentActivityName=".MainActivity">
+            android:name=".MainActivity"
+            android:label="@string/data_panel"
+            android:parentActivityName=".ControlActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".ControlActivity"/>
+        </activity>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings_title"
+            android:parentActivityName=".ControlActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ControlActivity"/>
         </activity>
 
         <activity
             android:name=".CalibrationActivity"
             android:label="@string/calibration_title"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".ControlActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".ControlActivity"/>
         </activity>
 
-        <activity
-            android:name=".ControlActivity"
-            android:label="@string/Balancing_car_console"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
-        </activity>
-
-        
     </application>
 
 </manifest>

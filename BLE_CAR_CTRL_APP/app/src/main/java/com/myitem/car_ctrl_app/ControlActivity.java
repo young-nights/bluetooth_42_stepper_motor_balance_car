@@ -1,5 +1,8 @@
 package com.myitem.car_ctrl_app;
 
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -11,58 +14,72 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
 /**
- * Car control activity.
+ * Home page: car control with navigation drawer.
  * Direction buttons use onTouchListener for jog control (press=ON, release=OFF).
  * ToggleButtons enable continuous modes (straight / backward / upright).
- * Plus/minus buttons adjust and send target speed via CMD_SET_SPEED.
  */
-public class ControlActivity extends AppCompatActivity {
+public class ControlActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private BluetoothService bluetoothService;
-    private int currentSpeed = 50; // Default speed value
+    private int currentSpeed = 50;
+
+    // Drawer
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
 
     // Direction buttons
-    private Button btnForward;
-    private Button btnBackward;
-    private Button btnLeft;
-    private Button btnRight;
-
+    private Button btnForward, btnBackward, btnLeft, btnRight;
     // ToggleButtons
-    private ToggleButton toggleStraight;
-    private ToggleButton toggleBackward;
-    private ToggleButton toggleUpright;
-
+    private ToggleButton toggleStraight, toggleBackward, toggleUpright;
     // Speed control
-    private TextView tvAccelValue;
-    private TextView tvDecelValue;
-    private ImageButton btnAccelPlus;
-    private ImageButton btnAccelMinus;
-    private ImageButton btnDecelPlus;
-    private ImageButton btnDecelMinus;
+    private TextView tvAccelValue, tvDecelValue;
+    private ImageButton btnAccelPlus, btnAccelMinus, btnDecelPlus, btnDecelMinus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control);
 
+        bluetoothService = BluetoothService.getInstance(this);
+
         // Setup Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar_control);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         getSupportActionBar().setTitle("小车控制");
 
-        bluetoothService = BluetoothService.getInstance(this);
+        // Initialize navigation drawer
+        drawerLayout = findViewById(R.id.drawer_layout_control);
+        NavigationView navigationView = findViewById(R.id.nav_view_control);
+
+        drawerToggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+        );
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerLayout.setScrimColor(Color.argb(160, 0, 0, 0));
+        drawerToggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_home);
+
         initViews();
 
-        // Defer listener setup until after first frame to avoid layout-inflation stutter.
-        // The control layout is large (~30 views + gradient background) and inflating it
-        // on the main thread drops frames if we also set up listeners synchronously.
+        // Defer listener setup until after first frame
         getWindow().getDecorView().post(() -> {
             setupDirectionButtons();
             setupToggleButtons();
@@ -70,19 +87,54 @@ public class ControlActivity extends AppCompatActivity {
         });
     }
 
+    // ===================== Navigation Drawer =====================
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        final int id = item.getItemId();
+        item.setChecked(true);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        Intent intent = null;
+        if (id == R.id.nav_data) {
+            intent = new Intent(this, MainActivity.class);
+        } else if (id == R.id.nav_calibration) {
+            intent = new Intent(this, CalibrationActivity.class);
+        } else if (id == R.id.nav_connection) {
+            intent = new Intent(this, SettingsActivity.class);
+        }
+
+        if (intent != null) {
+            startActivity(intent);
+        }
+
+        return true;
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    // ===================== Views =====================
+
     private void initViews() {
-        // Direction buttons
         btnForward = findViewById(R.id.forward_button);
         btnBackward = findViewById(R.id.down_button);
         btnLeft = findViewById(R.id.left_button);
         btnRight = findViewById(R.id.right_button);
 
-        // ToggleButtons
         toggleStraight = findViewById(R.id.toggleButton_goStraight);
         toggleBackward = findViewById(R.id.toggleButton2_back);
         toggleUpright = findViewById(R.id.toggleButton3_upRight);
 
-        // Speed controls
         tvAccelValue = findViewById(R.id.tv_default_plus_value);
         tvDecelValue = findViewById(R.id.tv_default_minus_value);
         btnAccelPlus = findViewById(R.id.btnPlus_accelerate);
@@ -91,19 +143,12 @@ public class ControlActivity extends AppCompatActivity {
         btnDecelMinus = findViewById(R.id.btnMinus_decelerate);
     }
 
-    // ===================== Direction Buttons (Jog Control) =====================
+    // ===================== Direction Buttons =====================
 
     private void setupDirectionButtons() {
-        // Forward: press sends forward ON, release sends forward OFF
         setupDirectionButton(btnForward, BluetoothService.CMD_FORWARD);
-
-        // Backward
         setupDirectionButton(btnBackward, BluetoothService.CMD_BACKWARD);
-
-        // Left
         setupDirectionButton(btnLeft, BluetoothService.CMD_TURN_LEFT);
-
-        // Right
         setupDirectionButton(btnRight, BluetoothService.CMD_TURN_RIGHT);
     }
 
@@ -112,18 +157,13 @@ public class ControlActivity extends AppCompatActivity {
             if (!checkConnected()) return false;
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    // Scale down + fade on press
-                    v.animate().scaleX(0.85f).scaleY(0.85f).alpha(0.7f)
-                            .setDuration(100).start();
+                    v.animate().scaleX(0.85f).scaleY(0.85f).alpha(0.7f).setDuration(100).start();
                     bluetoothService.sendControlCommand(subCmd, (byte) 1);
                     return true;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
-                    // Spring back with overshoot on release
                     v.animate().scaleX(1.0f).scaleY(1.0f).alpha(1.0f)
-                            .setDuration(250)
-                            .setInterpolator(new OvershootInterpolator())
-                            .start();
+                            .setDuration(250).setInterpolator(new OvershootInterpolator()).start();
                     bluetoothService.sendControlCommand(subCmd, (byte) 0);
                     return true;
             }
@@ -131,138 +171,72 @@ public class ControlActivity extends AppCompatActivity {
         });
     }
 
-    // ===================== ToggleButtons (Continuous Mode) =====================
+    // ===================== ToggleButtons =====================
 
     private void setupToggleButtons() {
-        // Straight toggle
         toggleStraight.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (!checkConnected()) {
-                buttonView.setChecked(!isChecked);
-                return;
-            }
+            if (!checkConnected()) { buttonView.setChecked(!isChecked); return; }
             animateToggleBounce(buttonView);
             bluetoothService.sendControlCommand(BluetoothService.CMD_FORWARD, (byte) (isChecked ? 1 : 0));
         });
-
-        // Backward toggle
         toggleBackward.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (!checkConnected()) {
-                buttonView.setChecked(!isChecked);
-                return;
-            }
+            if (!checkConnected()) { buttonView.setChecked(!isChecked); return; }
             animateToggleBounce(buttonView);
             bluetoothService.sendControlCommand(BluetoothService.CMD_BACKWARD, (byte) (isChecked ? 1 : 0));
         });
-
-        // Upright toggle (balance enable)
         toggleUpright.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (!checkConnected()) {
-                buttonView.setChecked(!isChecked);
-                return;
-            }
+            if (!checkConnected()) { buttonView.setChecked(!isChecked); return; }
             animateToggleBounce(buttonView);
             bluetoothService.sendControlCommand(BluetoothService.CMD_UPRIGHT, (byte) (isChecked ? 1 : 0));
         });
     }
 
-    /**
-     * Elastic bounce animation for toggle button state changes.
-     */
     private void animateToggleBounce(View view) {
-        view.animate()
-                .scaleX(0.9f).scaleY(0.9f)
-                .setDuration(80)
-                .withEndAction(() -> view.animate()
-                        .scaleX(1.0f).scaleY(1.0f)
-                        .setDuration(300)
-                        .setInterpolator(new OvershootInterpolator(1.2f))
-                        .start())
+        view.animate().scaleX(0.9f).scaleY(0.9f).setDuration(80)
+                .withEndAction(() -> view.animate().scaleX(1.0f).scaleY(1.0f)
+                        .setDuration(300).setInterpolator(new OvershootInterpolator(1.2f)).start())
                 .start();
     }
 
     // ===================== Speed Controls =====================
 
     private void setupSpeedControls() {
-        // Apply ripple effect to all speed buttons
         btnAccelPlus.setForeground(getDrawable(R.drawable.btn_control_ripple));
         btnAccelMinus.setForeground(getDrawable(R.drawable.btn_control_ripple));
         btnDecelPlus.setForeground(getDrawable(R.drawable.btn_control_ripple));
         btnDecelMinus.setForeground(getDrawable(R.drawable.btn_control_ripple));
 
-        // Accelerate + (increase target speed)
-        btnAccelPlus.setOnClickListener(v -> {
-            currentSpeed = Math.min(currentSpeed + 5, 100);
-            animateSpeedValue(tvAccelValue, String.valueOf(currentSpeed));
-            sendSpeedCommand();
-        });
-
-        // Accelerate - (decrease target speed)
-        btnAccelMinus.setOnClickListener(v -> {
-            currentSpeed = Math.max(currentSpeed - 5, 0);
-            animateSpeedValue(tvAccelValue, String.valueOf(currentSpeed));
-            sendSpeedCommand();
-        });
-
-        // Decelerate + (increase deceleration target speed)
-        btnDecelPlus.setOnClickListener(v -> {
-            int decelSpeed = parseSpeed(tvDecelValue);
-            decelSpeed = Math.min(decelSpeed + 5, 100);
-            animateSpeedValue(tvDecelValue, String.valueOf(decelSpeed));
-            sendSpeedCommand();
-        });
-
-        // Decelerate -
-        btnDecelMinus.setOnClickListener(v -> {
-            int decelSpeed = parseSpeed(tvDecelValue);
-            decelSpeed = Math.max(decelSpeed - 5, 0);
-            animateSpeedValue(tvDecelValue, String.valueOf(decelSpeed));
-            sendSpeedCommand();
-        });
+        btnAccelPlus.setOnClickListener(v -> { currentSpeed = Math.min(currentSpeed + 5, 100); animateSpeedValue(tvAccelValue, String.valueOf(currentSpeed)); sendSpeedCommand(); });
+        btnAccelMinus.setOnClickListener(v -> { currentSpeed = Math.max(currentSpeed - 5, 0); animateSpeedValue(tvAccelValue, String.valueOf(currentSpeed)); sendSpeedCommand(); });
+        btnDecelPlus.setOnClickListener(v -> { int s = parseSpeed(tvDecelValue); s = Math.min(s + 5, 100); animateSpeedValue(tvDecelValue, String.valueOf(s)); sendSpeedCommand(); });
+        btnDecelMinus.setOnClickListener(v -> { int s = parseSpeed(tvDecelValue); s = Math.max(s - 5, 0); animateSpeedValue(tvDecelValue, String.valueOf(s)); sendSpeedCommand(); });
     }
 
-    /**
-     * Update speed display with a quick scale-pulse animation.
-     */
     private void animateSpeedValue(TextView tv, String value) {
         tv.setText(value);
-        tv.animate()
-                .scaleX(1.3f).scaleY(1.3f)
-                .setDuration(80)
-                .withEndAction(() -> tv.animate()
-                        .scaleX(1.0f).scaleY(1.0f)
-                        .setDuration(150)
-                        .setInterpolator(new OvershootInterpolator())
-                        .start())
+        tv.animate().scaleX(1.3f).scaleY(1.3f).setDuration(80)
+                .withEndAction(() -> tv.animate().scaleX(1.0f).scaleY(1.0f)
+                        .setDuration(150).setInterpolator(new OvershootInterpolator()).start())
                 .start();
     }
 
-    /**
-     * Send the current speed value via CMD_SET_SPEED.
-     * Speed is sent as a 2-byte signed short in big-endian format.
-     */
     private void sendSpeedCommand() {
         if (!checkConnected()) return;
-        short speedShort = (short) currentSpeed;
-        byte[] speedBytes = new byte[] {
-                (byte) ((speedShort >> 8) & 0xFF),  // High byte
-                (byte) (speedShort & 0xFF)           // Low byte
-        };
-        bluetoothService.sendControlCommandWithData(BluetoothService.CMD_SET_SPEED, speedBytes);
+        short s = (short) currentSpeed;
+        bluetoothService.sendControlCommandWithData(BluetoothService.CMD_SET_SPEED,
+                new byte[]{(byte) (s >> 8), (byte) s});
     }
 
     private int parseSpeed(TextView tv) {
-        try {
-            return Integer.parseInt(tv.getText().toString().trim());
-        } catch (NumberFormatException e) {
-            return 50;
-        }
+        try { return Integer.parseInt(tv.getText().toString().trim()); }
+        catch (NumberFormatException e) { return 50; }
     }
 
     // ===================== Helpers =====================
 
     private boolean checkConnected() {
         if (!bluetoothService.isConnected()) {
-            Toast.makeText(this, "Bluetooth not connected. Please connect in Settings first.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.bluetooth_not_connected, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -273,7 +247,6 @@ public class ControlActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        // Release all active controls when leaving the page to prevent stuck commands
         if (bluetoothService.isConnected()) {
             bluetoothService.sendControlCommand(BluetoothService.CMD_FORWARD, (byte) 0);
             bluetoothService.sendControlCommand(BluetoothService.CMD_BACKWARD, (byte) 0);
@@ -285,7 +258,9 @@ public class ControlActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);

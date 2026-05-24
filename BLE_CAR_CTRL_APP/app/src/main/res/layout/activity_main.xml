@@ -1,165 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.drawerlayout.widget.DrawerLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
+    <!-- Top toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/material_dynamic_primary50"
+        android:elevation="4dp"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="数据面板"
+        app:titleTextColor="#FFFFFF" />
 
-        <!-- 顶部工具栏 -->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_home"
-            android:layout_width="409dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="7dp"
-            android:background="@color/material_dynamic_primary50"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:layout_constraintBottom_toTopOf="@+id/imageView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:menu="@menu/nav_menu" />
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="107dp"
+        android:layout_height="146dp"
+        android:importantForAccessibility="no"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_home"
+        app:srcCompat="@drawable/ranging" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="107dp"
-            android:layout_height="146dp"
-            android:importantForAccessibility="no"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-            app:layout_constraintEnd_toStartOf="@+id/imageView3"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView3"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ranging" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="107dp"
+        android:layout_height="146dp"
+        android:layout_marginTop="12dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_home"
+        app:srcCompat="@drawable/speedometer" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="107dp"
-            android:layout_height="146dp"
-            android:importantForAccessibility="no"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView2"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/speedometer" />
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="107dp"
+        android:layout_height="146dp"
+        android:layout_marginTop="12dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_home"
+        app:srcCompat="@drawable/gyroscope_image" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="107dp"
-            android:layout_height="146dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginBottom="36dp"
-            android:importantForAccessibility="no"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/textView24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_home"
-            app:srcCompat="@drawable/gyroscope_image"
-            tools:visibility="visible" />
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="107dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:gravity="start|center"
+        android:text="@string/RealSpeed_name"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-        <TextView
-            android:id="@+id/textView26"
-            android:layout_width="107dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="24dp"
-            android:gravity="start|center"
-            android:text="@string/Roll_name"
-            android:textAlignment="textStart"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView24"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView24"
-            app:layout_constraintTop_toBottomOf="@+id/textView24" />
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="107dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:gravity="start|center"
+        android:text="@string/NormalSpeed_name"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
-        <TextView
-            android:id="@+id/textView27"
-            android:layout_width="107dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="24dp"
-            android:gravity="start|center"
-            android:text="@string/Yaw_name"
-            android:textAlignment="textStart"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView26"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView26"
-            app:layout_constraintTop_toBottomOf="@+id/textView26" />
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="107dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:gravity="start|center"
+        android:text="@string/Distant_name"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-        <TextView
-            android:id="@+id/textView25"
-            android:layout_width="107dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="24dp"
-            android:gravity="start|center"
-            android:text="@string/NormalSpeed_name"
-            android:textAlignment="gravity"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="107dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:gravity="start|center"
+        android:text="@string/Pitch_name"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-        <TextView
-            android:id="@+id/textView23"
-            android:layout_width="107dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="36dp"
-            android:gravity="start|center"
-            android:text="@string/Distant_name"
-            android:textAlignment="textStart"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="107dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:gravity="start|center"
+        android:text="@string/Roll_name"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView24"
+        app:layout_constraintStart_toStartOf="@+id/textView24"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="107dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="36dp"
-            android:gravity="start|center"
-            android:text="@string/Pitch_name"
-            android:textAlignment="textStart"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="107dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:gravity="start|center"
+        android:text="@string/Yaw_name"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView26"
+        app:layout_constraintStart_toStartOf="@+id/textView26"
+        app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="107dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="36dp"
-            android:gravity="start|center"
-            android:text="@string/RealSpeed_name"
-            android:textAlignment="textStart"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- 侧滑菜单 -->
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_menu"/>
-
-</androidx.drawerlayout.widget.DrawerLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,8 @@
     <string name="Roll_name">翻滚角：</string>
     <string name="advanced_setup">高级设置</string>
     <string name="control_panel">控制面板</string>
-    <string name="home_Page">主页</string>
+    <string name="home_Page">控制面板</string>
+    <string name="data_panel">数据面板</string>
     <string name="navigation_drawer_open">打开导航菜单</string>
     <string name="navigation_drawer_close">关闭导航菜单</string>
     <string name="Balancing_car_console">平衡小车控制台</string>
