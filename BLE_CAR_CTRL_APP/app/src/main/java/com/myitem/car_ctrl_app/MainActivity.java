@@ -105,29 +105,29 @@ public class MainActivity extends AppCompatActivity
         final int id = item.getItemId();
         item.setChecked(true);
 
-        // Close drawer first, then navigate after animation to avoid stutter
+        // Close drawer with minimal delay, then navigate
         drawerLayout.closeDrawer(GravityCompat.START);
-        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                drawerLayout.removeDrawerListener(this);
-                if (id == R.id.nav_home) {
-                    // Already on home, do nothing
-                    return;
-                }
-                Intent intent = null;
-                if (id == R.id.nav_calibration) {
-                    intent = new Intent(MainActivity.this, CalibrationActivity.class);
-                } else if (id == R.id.nav_connection) {
-                    intent = new Intent(MainActivity.this, SettingsActivity.class);
-                } else if (id == R.id.nav_control) {
-                    intent = new Intent(MainActivity.this, ControlActivity.class);
-                }
-                if (intent != null) {
-                    startActivity(intent);
-                }
+
+        if (id == R.id.nav_home) {
+            return true;
+        }
+
+        // Slight delay lets drawer start closing before new activity slides in
+        drawerLayout.postDelayed(() -> {
+            Intent intent = null;
+            if (id == R.id.nav_calibration) {
+                intent = new Intent(MainActivity.this, CalibrationActivity.class);
+            } else if (id == R.id.nav_connection) {
+                intent = new Intent(MainActivity.this, SettingsActivity.class);
+            } else if (id == R.id.nav_control) {
+                intent = new Intent(MainActivity.this, ControlActivity.class);
             }
-        });
+            if (intent != null) {
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        }, 120);
+
         return true;
     }
 
