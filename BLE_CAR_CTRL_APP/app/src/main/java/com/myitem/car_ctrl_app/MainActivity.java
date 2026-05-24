@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Data display TextViews
     private TextView tvRealSpeed, tvNormalSpeed, tvDistance;
-    private TextView tvPitch, tvYaw, tvRoll;
+    private TextView tvPitch, tvRoll, tvYaw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("数据面板");
 
         // Bind data display TextViews
-        tvRealSpeed = findViewById(R.id.textView15);
-        tvNormalSpeed = findViewById(R.id.textView25);
-        tvDistance = findViewById(R.id.textView23);
-        tvPitch = findViewById(R.id.textView24);
-        tvYaw = findViewById(R.id.textView27);
-        tvRoll = findViewById(R.id.textView26);
+        tvRealSpeed = findViewById(R.id.tv_real_speed_value);
+        tvNormalSpeed = findViewById(R.id.tv_normal_speed_value);
+        tvDistance = findViewById(R.id.tv_distance_value);
+        tvPitch = findViewById(R.id.tv_pitch_value);
+        tvRoll = findViewById(R.id.tv_roll_value);
+        tvYaw = findViewById(R.id.tv_yaw_value);
 
         registerServiceCallback();
         updateToolbarTitle();
@@ -117,8 +117,7 @@ public class MainActivity extends AppCompatActivity {
             int speed = ((data[0] & 0xFF) << 8) | (data[1] & 0xFF);
             if ((speed & 0x8000) != 0) speed -= 0x10000;
             final int fs = speed;
-            runOnUiThread(() -> animateTextView(tvRealSpeed,
-                    getString(R.string.RealSpeed_name) + fs + " cm/s"));
+            runOnUiThread(() -> animateTextView(tvRealSpeed, fs + " cm/s"));
         }
 
         if (type == BluetoothService.TYPE_POST && cmd == BluetoothService.QUERY_EULER && data.length >= 12) {
@@ -127,9 +126,9 @@ public class MainActivity extends AppCompatActivity {
                 float pitch = bytesToFloat(data, 4);
                 float yaw = bytesToFloat(data, 8);
                 runOnUiThread(() -> {
-                    animateTextView(tvRoll, getString(R.string.Roll_name) + String.format(Locale.US, "%.2f°", roll));
-                    animateTextView(tvPitch, getString(R.string.Pitch_name) + String.format(Locale.US, "%.2f°", pitch));
-                    animateTextView(tvYaw, getString(R.string.Yaw_name) + String.format(Locale.US, "%.2f°", yaw));
+                    animateTextView(tvPitch, String.format(Locale.US, "%.2f°", pitch));
+                    animateTextView(tvRoll, String.format(Locale.US, "%.2f°", roll));
+                    animateTextView(tvYaw, String.format(Locale.US, "%.2f°", yaw));
                 });
             } catch (Exception ignored) {}
         }
@@ -156,12 +155,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void resetDisplay() {
-        tvRealSpeed.setText(getString(R.string.RealSpeed_name) + "-- cm/s");
-        tvNormalSpeed.setText(getString(R.string.NormalSpeed_name) + "-- cm/s");
-        tvDistance.setText(getString(R.string.Distant_name) + "-- cm");
-        tvRoll.setText(getString(R.string.Roll_name) + "--°");
-        tvPitch.setText(getString(R.string.Pitch_name) + "--°");
-        tvYaw.setText(getString(R.string.Yaw_name) + "--°");
+        tvRealSpeed.setText("-- cm/s");
+        tvNormalSpeed.setText("-- cm/s");
+        tvDistance.setText("-- cm");
+        tvPitch.setText("--°");
+        tvRoll.setText("--°");
+        tvYaw.setText("--°");
     }
 
     private void updateToolbarTitle() {
