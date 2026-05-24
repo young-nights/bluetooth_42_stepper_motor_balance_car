@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity
 
         if (intent != null) {
             startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out);
         }
 
         return true;
