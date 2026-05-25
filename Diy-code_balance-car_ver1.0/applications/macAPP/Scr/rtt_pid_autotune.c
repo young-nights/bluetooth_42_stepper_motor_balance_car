@@ -356,6 +356,11 @@ void autotune_load_from_flash(void)
     uint16_t crc_calc = CrcCalc_Crc16Modbus(crc_buf, 10);
 
     if (raw[4] != crc_calc) {
+        rt_kprintf("AUTOTUNE: Flash CRC mismatch (calc=0x%04X stored=0x%04X), using defaults.\n",
+                   crc_calc, raw[4]);
+        autotune_load_default();
+        return;
+    }
 
     tune.best_kp = kp;
     tune.best_kd = kd;
