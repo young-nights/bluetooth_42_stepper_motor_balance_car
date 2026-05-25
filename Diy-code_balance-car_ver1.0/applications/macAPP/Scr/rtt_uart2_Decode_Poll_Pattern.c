@@ -8,6 +8,7 @@
  * 2025-03-15     teati       the first version
  */
 #include "rtt_uart2_Decode_Poll_Pattern.h"
+#include "rtt_pid_autotune.h"
 
 
 
@@ -894,6 +895,34 @@ void Protocol_Operation_USART2(rt_device_t dev,uint8_t* CmdBuf)
 
                 }break;
 
+                // PID自适应整定-启动---------------------------------------------------------------------------------------------------------------
+                case FRAME_SET_CAR_AUTOTUNE_START_CMD:
+                {
+                    rt_kprintf("PRINTF:%d. APP start autotune Command\r\n");
+                    autotune_start();
+                }break;
+
+                // PID自适应整定-中止---------------------------------------------------------------------------------------------------------------
+                case FRAME_SET_CAR_AUTOTUNE_STOP_CMD:
+                {
+                    rt_kprintf("PRINTF:%d. APP stop autotune Command\r\n");
+                    autotune_stop();
+                }break;
+
+                // 从Flash加载已保存PID参数---------------------------------------------------------------------------------------------------------------
+                case FRAME_SET_CAR_AUTOTUNE_LOAD_CMD:
+                {
+                    rt_kprintf("PRINTF:%d. APP load autotune params Command\r\n");
+                    autotune_load_from_flash();
+                }break;
+
+                // 恢复默认PID参数---------------------------------------------------------------------------------------------------------------
+                case FRAME_SET_CAR_AUTOTUNE_RESET_CMD:
+                {
+                    rt_kprintf("PRINTF:%d. APP reset autotune params Command\r\n");
+                    autotune_load_default();
+                }break;
+
                 default:    break;
             }
         }break;
@@ -1007,6 +1036,15 @@ void USART2_Order_to_Principal(uint8_t order)
             emptyBuf[0] = FRAME_SET_CAR_FINISHED_CALIBRATE_CMD;
             emptyBuf[1] = 7;
             USART2_Send_Command_to_Principal(2, FRAME_TYPE_ACT, FRAME_TYPE_POST, emptyBuf);
+        }break;
+
+        // PID自适应整定状态上报------------------------------------------------------------------------------------------------
+        case Order_SEND_CAR_AUTOTUNE_STATUS_CMD:
+        {
+            rt_memset(emptyBuf, 0, sizeof(emptyBuf));
+            memcpy(emptyBuf, &tune.best_kp, 4);
+            memcpy(emptyBuf + 4, &tune.best_kd, 4);
+            USART2_Send_Command_to_Principal(8, FRAME_TYPE_ACT, FRAME_TYPE_POST, emptyBuf);
         }break;
 
 

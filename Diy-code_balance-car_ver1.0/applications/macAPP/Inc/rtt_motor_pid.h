@@ -10,6 +10,7 @@
 #ifndef APPLICATIONS_MACAPP_INC_RTT_MOTOR_PID_H_
 #define APPLICATIONS_MACAPP_INC_RTT_MOTOR_PID_H_
 #include "macSYS.h"
+#include "rtt_pid_autotune.h"
 
 
 

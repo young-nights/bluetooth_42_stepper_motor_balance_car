@@ -113,6 +113,10 @@ typedef struct {
 #define       FRAME_SET_CAR_FINISHED_CALIBRATE_CMD               (0x1F)      // 设置：每个校准完后由此发送校准完的提示给APP用于界面弹窗提示
 #define       FRAME_SET_CAR_RUNNING_MODE_CMD                     (0x20)      // 设置：小车的行进模式，此模式下只要单独点击就可以进行一直直行或者后退
 #define       FRAME_SET_CAR_MECHANICALl_MEDIAN_Value_CMD         (0x21)      // 设置：小车的机械中值校准指令
+#define       FRAME_SET_CAR_AUTOTUNE_START_CMD                (0x22)      // 设置：启动PID自适应整定
+#define       FRAME_SET_CAR_AUTOTUNE_STOP_CMD                 (0x23)      // 设置：中止PID自适应整定
+#define       FRAME_SET_CAR_AUTOTUNE_LOAD_CMD                 (0x24)      // 设置：从Flash加载已保存的PID参数
+#define       FRAME_SET_CAR_AUTOTUNE_RESET_CMD                (0x25)      // 设置：恢复默认PID参数
 
 
 
@@ -121,6 +125,7 @@ typedef struct {
 #define       FRAME_GET_CAR_EULER_ANGLES_CMD                     (0xA1)      // 获取：小车的欧拉角数据（三轴）
 /*! 小车单向发送指令 */
 #define       FRAME_ACT_CAR_IS_READY_CMD                         (0xA2)      // 发送：小车的准备就绪指令
+#define       FRAME_ACT_CAR_AUTOTUNE_STATUS_CMD                (0xA3)      // 发送：自适应整定状态上报
 
 
 // 广播指令---------------------------------------------------------------------------------------

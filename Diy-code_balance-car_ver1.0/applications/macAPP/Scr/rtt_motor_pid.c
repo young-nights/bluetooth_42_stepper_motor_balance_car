@@ -392,6 +392,12 @@ void balance_car_thread_entry(void* parameter)
             }
         }
 
+        /* Auto-tuning data collection and cost evaluation */
+        if (tune.state == TUNE_RUNNING || tune.state == TUNE_INIT) {
+            autotune_update(carPID.verticalProcess.pitch_bias,
+                            carPID.verticalProcess.ygyro_bias);
+        }
+
         Motor_Left_Set(leftDuty, finalDuty);
         Motor_Right_Set(rightDuty, finalDuty);
 
