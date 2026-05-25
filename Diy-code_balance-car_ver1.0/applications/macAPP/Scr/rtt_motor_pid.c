@@ -70,7 +70,7 @@ void PID_Vertical_Parameter_Init(mac_pid_t *pid)
 
     pid->verticalParam.kp = 15.0f;
     pid->verticalParam.ki = 0;
-    pid->verticalParam.kd = 0.1;
+    pid->verticalParam.kd = 4.0f;  /* Increased from 0.1 to 4.0: 40× greater damping to suppress high-frequency oscillation */
     /* 设置输出限幅 */
     pid->verticalParam.out_limit = 1300;
     /* 姿态更新周期 */
@@ -165,8 +165,8 @@ void PID_Speed_Parameter_Init(mac_pid_t *pid)
     PID_Speed_Paramter_DeInit(pid);
 
     pid->speedParam.dt = 0.005;
-    pid->speedParam.kp = 10.0f;
-    pid->speedParam.ki = 0.1;
+    pid->speedParam.kp = 0.0f;   /* Disabled (was 10.0): speed estimation from accelerometer integration is too noisy for reliable PI control */
+    pid->speedParam.ki = 0.0f;   /* Disabled (was 0.1): re-enable after encoder-based speed feedback is implemented */
     pid->speedParam.kd = 0;
 
 
